@@ -6,18 +6,8 @@ var adduserlinkObj = document.getElementById('adduserlink');
 var addcommentlinkObj = document.getElementById('addcommentlink');
 var adduserObj = document.getElementById('adduser');
 var addcommentObj = document.getElementById('addcomment');
-
-// Homework: 
-// 			 When clicking on the "Users"-link a table
-//           needs to be created with the data of the
-//			 https://jsonplaceholder.typicode.com/users
-//           Only use the first 4 attributes. The columns
-//			 stand for the keys and rows for the values.
-//
-// 			 Respectively, do the same for the "Comments"-Link
-//           and the data of 
-//			 https://jsonplaceholder.typicode.com/comments
-//			 
+var adduserbuttonObj = document.getElementById('adduserbutton');
+var addcommentbuttonObj = document.getElementById('addcommentbutton');
 
 function createUserTable( userArray ) {
 	var tableObj = document.createElement('table');
@@ -62,7 +52,7 @@ userlinkObj.onclick = function() {
 
 	var xhr = new XMLHttpRequest();
 	// define the destination and the HTTP method
-	xhr.open('GET', 'http://172.16.50.184:3050/users');	
+	xhr.open('GET', 'http://35.156.88.18:3050/users');	
 	xhr.onload = function() {
 		if (xhr.status === 200) {
 			console.log('success, status code is: ' + xhr.status);
@@ -95,7 +85,7 @@ commentslinkObj.onclick = function() {
 
 	var xhr = new XMLHttpRequest();
 	// define the destination and the HTTP method
-	xhr.open('GET', 'http://172.16.50.184:3050/comments');	
+	xhr.open('GET', 'http://35.156.88.18:3050/comments');	
 	xhr.onload = function() {
 		if (xhr.status === 200) {
 			console.log('success, status code is: ' + xhr.status);
@@ -123,9 +113,22 @@ adduserlinkObj.onclick = function() {
 	adduserObj.style.display = 'block';
 	addcommentObj.style.display = 'none';
 
-	/*
+}
+
+addcommentlinkObj.onclick = function() {
+	mainObj.innerHTML = '';
+	adduserObj.style.display = 'none';
+	addcommentObj.style.display = 'block';
+}
+
+adduserbuttonObj.onclick = function() {
+
+	var firstnameinputObj = document.getElementById('firstnameinput');
+	var usernameinputObj = document.getElementById('usernameinput');
+	var emailinputObj = document.getElementById('emailinput');
+
 	var xhr = new XMLHttpRequest();
-	xhr.open( 'POST', 'http://172.16.50.184:3050/users' );
+	xhr.open( 'POST', 'http://35.156.88.18:3050/users' );
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.onload = function() {
 		if( xhr.status === 200 ) {
@@ -140,19 +143,41 @@ adduserlinkObj.onclick = function() {
 	}
 	
 	var params = {
-		name: 'King Kong',
-		username: 'kingkong2017',
-		email: 'kingkong2@gmail.com'
+		name: firstnameinputObj.value,
+		username: usernameinputObj.value,
+		email: emailinputObj.value
 	};
 
 	xhr.send( JSON.stringify(params) );
-	*/
 }
 
-addcommentlinkObj.onclick = function() {
-	mainObj.innerHTML = '';
-	adduserObj.style.display = 'none';
-	addcommentObj.style.display = 'block';
+addcommentbuttonObj.onclick = function() {
+	var commentnameinputObj = document.getElementById('commentnameinput');
+	var commentmailinputObj = document.getElementById('commentmailinput');
+	var commentbodyinputObj = document.getElementById('commentbodyinput');
+
+	var xhr = new XMLHttpRequest();
+	xhr.open( 'POST', 'http://35.156.88.18:3050/comments' );
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onload = function() {
+		if( xhr.status === 200 ) {
+			console.log( 'response successfull: ' + xhr.reponseText );
+			var responseObj = JSON.parse(xhr.responseText);
+			console.log(responseObj);
+
+		}
+		else {
+			console.log( 'error: ' + xhr.status );
+		}
+	}
+	
+	var params = {
+		name: commentnameinputObj.value,
+		email: commentmailinputObj.value,
+		body: commentbodyinputObj.value
+	};
+
+	xhr.send( JSON.stringify(params) );
 }
 
 // task:
