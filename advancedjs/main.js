@@ -428,15 +428,21 @@ var objPlanet = {
 	hallo: ''
 }
 
-var objSun = {};
+var objSun = {  };
 
 objHallo.sayHallo( 'world' );
 // method borrowing
 objHallo.sayHallo.call( objPlanet, 'planet' );
 objHallo.sayHallo.call( objSun, 'sun' );
 objHallo.sayHallo.call( this, 'globe' );
-
-
+	
+	
+// 1
+	
+	
+	
+// 2
+	
 var john = {
 	name: 'John',
 	age: 26,
@@ -465,3 +471,150 @@ var emily = {
 john.presentation.call( emily, 'formal', 'afternoon' );
 
 
+// homework
+// 1
+
+var alfred = {
+	name: 'Alfred',
+	count: 0,
+	sayYourName: function() {
+		if(this.count === undefined) {
+			this.count = 0;
+		}
+
+		console.log( 'My name is ' + this.myName );
+		this.count++;
+	},
+	setLastName: function(lastname) {
+		this.lastname = lastname;
+	}
+};
+
+var gonzo = {
+	myName: 'Gonzo'
+};
+
+alfred.sayYourName.call( gonzo );
+alfred.setLastName.call( gonzo, 'Gonzales' );
+
+function Item( name, price ) {
+	this.name = name;
+	this.price = price;
+	this.sold = false;
+}
+
+Item.prototype.sell = function() {
+	this.sold = true;
+}
+
+function Book( name, price, author ) {
+	Item.call(this, name, price);
+	this.author = author;
+	this.category = 'book';
+}
+
+Book.prototype =
+Object.create(Item.prototype);
+
+function Movie( name, price, director ) {
+	Item.call(this, name, price);
+	this.director = director;
+	this.category = 'movie';
+}
+
+Movie.prototype =
+Object.create(Item.prototype);
+
+var casino = new Movie('Casino', 20, 'Martin Scorsese');
+var it = new Book('IT', 20, 'Stephen King');
+
+Item.prototype.sell.call( casino );
+casino.sell();
+
+function ComicBook(name, price, author, minAge){
+	Book.call(this, name, price, author);
+	
+	// !minAge === (minAge === undefined)
+	if (!minAge || minAge < 7 ) { 
+		this.minAge = 6; 
+	} 
+	else 
+		this.minAge = minAge; 
+} 
+
+ComicBook.prototype = Object.create(Book.prototype);
+var jessicaJones = new ComicBook('Jessica Jones', 19.99, 'Marvel', 12);
+jessicaJones.sell();
+
+function Animal( name ) {
+	this.name = name;
+}
+
+Animal.prototype.eat = function() { }
+Animal.prototype.sleep = function() { }
+Animal.prototype.die = function() { }
+
+function Mammal( name ) {
+	Animal.call( this, name );
+}
+Mammal.prototype = Object.create( Animal.prototype );
+Mammal.prototype.breathe = function() { }
+
+	function Tiger( name ) {
+		Mammal.call(this, name);
+	}
+	Tiger.prototype = Object.create( Mammal.prototype );
+	Tiger.prototype.kill = function(otherAnimal) {
+		otherAnimal.die();
+	}
+
+	function Horse( name ) {
+		Mammal.call(this, name);
+	}
+	Horse.prototype = Object.create( Mammal.prototype );
+
+function Fish( name ) {
+	Animal.call( this, name );
+}
+Fish.prototype = Object.create( Animal.prototype );
+Fish.prototype.swim = function() { }
+
+	function Tuna( name ) {
+		Fish.call(this, name);
+	}
+	Tuna.prototype = Object.create( Fish.prototype );
+
+	function Shark( name ) {
+		Fish.call(this, name);
+	}
+	Shark.prototype = Object.create( Fish.prototype );
+	Shark.prototype.kill = function(otherAnimal) {
+		otherAnimal.die();
+	}
+
+function Bird( name ) {
+	Animal.call( this, name );
+}
+Bird.prototype = Object.create( Mammal.prototype );
+Bird.prototype.fly = function() { }
+
+	function Woodpecker( name ) {
+		Bird.call(this, name);
+	}
+	Woodpecker.prototype = Object.create( Bird.prototype );
+
+	function Hummingbird( name ) {
+		Bird.call(this, name);
+	}
+	Hummingbird.prototype = Object.create( Bird.prototype );
+
+// 4b
+
+var vitaly = new Tiger('Vitaly');
+var nemo = new Shark('Nemo');
+var fury = new Horse('Fury');
+
+nemo.kill(vitaly);
+nemo.kill(fury);
+
+nemo.die();
