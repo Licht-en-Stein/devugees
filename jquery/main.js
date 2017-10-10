@@ -30,8 +30,23 @@ $(document).ready( function() {
 	// 5. make all list items which are children of uls of class flagship 
 	//    blue
 	$('ul.flagship').addClass('blue-color');
+	
 
-
-
+	// https://github.com/foobaroo/devugees/tree/master/course
+	// download jsadvanced_2.pdf
+	
+	// Tasks:
+	// (1) Make all rows with an even index aliceblue
+	// (2) Make the rest yellow
+	// (3) Make the TDs inside the TRs with an even index aliceblue
+	// (4) Make the TDs inside the TRs with an odd index yellow
+	// (5) Highlight all TDs that contain 'Hagrid' (highlight-2)
+	// (6) Highlight all non-humans with index = 1
+	// (7) Highlight all non-humans with index > 1
+	// (8) Highlight all non-humans with index < 1
+	
+	
+	
+	
 });
 
