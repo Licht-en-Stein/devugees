@@ -4,8 +4,13 @@ table, th, td {
     padding: 5px;
 }
 
+.indent {
+    padding: 2px 8px;
+    margin: 2px 8px;
+}
+
 .even-row {
-    background-color: aliceblue;    
+    background-color: blue;    
 }
 
 .odd-row {
