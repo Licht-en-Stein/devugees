@@ -7,7 +7,57 @@
             document.write('<link rel="stylesheet" type="text/css" href="style.css?'+Math.random()+'" />');
         </script>        
     </head>
-    <body>
+    <body style="display: none">
+
+    <header>
+        <nav>
+            <ul>
+                <li><a id="nav-about-me" href="#">ABOUT ME</a></li>
+                <li><a id="nav-fav-city" href="#">MY FAVOURITE CITY</a></li>
+                <li><a id="nav-fav-songs" href="#">MY FAVOURITE SONGS</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="content">
+        <div id="about-me">
+            <h2> Hi, </h2>
+            <p>
+                My name is Jan and I am 32 years old. I live in Berlin and
+                work as a freelance Web developer and lecturer. Currently,
+                I try to teach students at Devugees.org, which is an institution
+                which focuses on digital education.
+            </p>
+        </div>
+
+        <div id="my-favourite-city" style="display: none">
+            <h2> Berlin! </h2>
+            <p>
+                My name is Jan and I am 32 years old. I live in Berlin and
+                work as a freelance Web developer and lecturer. Currently,
+                I try to teach students at Devugees.org, which is an institution
+                which focuses on digital education.
+            </p>
+        </div>
+
+        <div id="my-favourite-songs" style="display: none">
+            <h2> I love music! </h2>
+            <p>
+                Especially electronic music. Here are my three favourite songs:
+
+                <iframe
+                        width="560"
+                        height="315"
+                        src="https://www.youtube.com/embed/niVXlaPkff8"
+                        frameborder="0"
+                        allowfullscreen>
+                </iframe>
+
+
+
+            </p>
+        </div>
+    </div>
 
     <!-- TASK:
 
@@ -28,7 +78,10 @@
         "My favourite songs" -> Embed 2 or 3 Songs from Youtube in your page
                                 (Google how to do that)
 
+
+
     -->
+    </body>
 
     <script src="jquery-3.2.1.min.js"></script>
 		<script type="text/javascript">
