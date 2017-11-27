@@ -11,6 +11,15 @@ $(document).ready( function() {
 	//
 	//       What is a good way to test your code?
 
+	$('.updatehtml').click(function() {
+		var htmlMarkup = $('#htmlmarkup').val();
+		$('#text-1').html(htmlMarkup);
+	});
+
+	$('.updatetext').click(function() {
+		var htmlMarkup = $('#htmlmarkup').val();
+		$('#text-1').text(htmlMarkup);
+	});
 
     // attr() and removeAttr()
     //
@@ -21,17 +30,38 @@ $(document).ready( function() {
 	//       b) when the user clicks on remove, the
 	//          style of "text-2b" will be removed entirely
 
+	$('.add').click( function() {
+		$('#text-2').attr('id', 'text-2b');
+	});
+
+	$('.remove').click( function() {
+		$('#text-2b').removeAttr('style');
+	});
 
 	// Adding DOM-Elements
 	//
 	// task: a) when the user clicks on "Insert at end",
 	//          a new fruit is added at the end of the
 	//			list
-	//       b) when the user clicks on "Insert at end",
+	//       b) when the user clicks on "Insert at start",
 	//			a new fruit is added at the beginning of the list
-	//       c) when the user clicks on "first becomes last"
+	//       c) when the user clicks on "first becomes last" 
 	//          the first element will be added to the end of the list
 
+	$('.after').click( function() {
+		var value = $('#userinput').val();
+		$('#fruit-list > li').last().after('<li>' + value + '</li>');
+	});
+
+	$('.before').click( function() {
+		var value = $('#userinput').val();
+		$('#fruit-list > li').first().before('<li>' + value + '</li>');		
+	});
+
+	$('.append').click( function() {
+		var value = $('#userinput').val();
+		$('#fruit-list').append($('#fruit-list > li').first());
+	});
 
 	// Removing and Detaching Elements
 	//
@@ -44,6 +74,23 @@ $(document).ready( function() {
     //       d) when the user clicks on the button add back,
     //			the div with class box will be reattached
 
+    var el = $('div.box');
+
+	$('.remove').click( function() {
+		el.remove();
+	});  
+
+	$('.detach').click( function() {
+		el.detach();
+	});
+
+	$('.empty').click( function() {
+		el.empty();
+	});
+
+	$('div.add').click( function() {
+		$('#container').append(el);
+	});
 
 });
 
