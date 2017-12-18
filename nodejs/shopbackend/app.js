@@ -38,7 +38,7 @@ app.get('/categories', function(req, res) {
 });
 
 app.get('/customers', function(req, res) {
-	con.query('select * from customers', function(err, rows) {
+	con.query('select * from customers where active = 1', function(err, rows) {
 		if(err)
 			throw res.json( err );
 
@@ -47,10 +47,52 @@ app.get('/customers', function(req, res) {
 	});
 });
 
-app.put('/rename', function(req, res) {
-	console.log('received a put on /rename ...');
-	res.json({'hallo':'world'});
+app.put('/activate/:userid', function(req, res) {
+	con.query('update customers set active = ? where id = ?', 
+		[req.body.status, req.params.userid],
+		function(err, rows) {
+		if(err)
+			throw res.json( err );
+
+		console.log( rows );
+		res.json( rows );
+	});	
 });
 
+app.post('/user', function(req, res) {
+	
+	con.query('select * from customers where email = ?',
+		[req.body.email], 
+		function(err, rows) {
+			if(err)
+				throw res.json(err);
+
+			if( rows.length > 0 ) {
+				res.json({error: 'Email already exists.'});
+			}
+			else {
+				con.query(`insert into customers (firstname, lastname, birthdate, phone, city, street, email) 
+					values (?, ?, ?, ?, ?, ?, ?)`,
+					[
+					  req.body.firstname, 
+					  req.body.lastname, 
+					  req.body.birthdate, 
+					  req.body.phone, 
+					  req.body.city, 
+					  req.body.street, 
+					  req.body.email 
+					],
+					function(err, rows) {
+					  if(err)
+					  	throw res.json( err );
+
+					  res.json( rows );
+					}
+				);
+			}
+		});
+});
+
+app.put('/user')
 
 app.listen(port);
