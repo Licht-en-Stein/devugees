@@ -93,6 +93,43 @@ app.post('/user', function(req, res) {
 		});
 });
 
-app.put('/user')
+app.put('/user/:userid', function(req, res) {
+	console.log('userid: ' + req.params.userid);
+	var sql = 'update customers set ';
+	var i = 1;
+	var bodyLength = Object.keys(req.body).length;
+	var values = [];
+	for(var field in req.body) {
+		sql += field + ' = ?';
+		if(i < bodyLength)
+			sql += ',';
+		i++;
+		values.push( req.body[field] );
+	}
+
+	sql += ' where id = ?';
+	values.push( req.params.userid );
+	con.query(sql, 
+		values,
+		function(err, rows) {
+		if(err)
+			throw res.json( err );
+
+		console.log( rows );
+		res.json( rows );
+	});		
+});
+
+app.delete('/user/:userid', function(req, res) {
+	con.query('update customers set deleted = now() where id = ?', [req.params.userid], 
+		function(err, rows) {
+		if(err)
+			throw res.json( err );
+
+		console.log( rows );
+		res.json( rows );
+	});
+});
 
 app.listen(port);
+
