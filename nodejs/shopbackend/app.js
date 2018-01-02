@@ -37,6 +37,16 @@ app.get('/categories', function(req, res) {
 	});
 });
 
+app.get('/paymethods', function(req, res) {
+	con.query('select * from payment_methods', function(err, rows) {
+		if(err)
+			throw res.json( err );
+
+		console.log( rows );
+		res.json( rows );
+	});	
+});
+
 app.get('/customers', function(req, res) {
 	con.query('select * from customers where active = 1', function(err, rows) {
 		if(err)
