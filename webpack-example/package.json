@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --config=config/webpack.dev.js",
     "build": "webpack --config=config/webpack.dev.js",
-    "dev": "node src/server/server.js"
+    "dev": "node src/server/server.js",
+    "devmon": "nodemon src/server/server.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +26,8 @@
     "jquery": "^3.3.1",
     "popper.js": "^1.12.9",
     "style-loader": "^0.20.1",
-    "webpack": "^3.10.0"
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.0"
   }
 }

@@ -1,3 +1,4 @@
+import 'webpack-hot-middleware/client';
 import './index.html';
 import sum from './sum';
 import $ from 'jquery';
