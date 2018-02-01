@@ -16,6 +16,7 @@ server.use(webpackHotMiddleware);
 const staticMiddleware = express.static('dist');
 server.use(staticMiddleware);
 
+debugger;
 server.get('/login', function(req, res) {
 	res.send({error: '0'});
 });
