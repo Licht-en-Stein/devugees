@@ -5,6 +5,7 @@ import $ from 'jquery';
 import 'bootstrap';
 import './main.scss';
 import pic from './images/beach.jpg';
+import tpl from './template.html';
 
 console.log('hallo world');
 var a = () => {
@@ -27,6 +28,8 @@ $(() => {
 		</div>
 		<div id="root"></div>
  `);
+
+ $('#root').append(tpl);
 
 	$('#root').append('<h2>How are you doing?</h2>');
 	$('#root').append('<button type="button" class="btn btn-primary">Primary</button>');

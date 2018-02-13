@@ -42,23 +42,9 @@ module.exports = {
         })
       },
       {
-        test: /\.html$/,
-        use: [{
-            loader: 'file-loader',
-            options: {
-              name: '[name].html'
-            }
-          },
-          {
-            loader: 'extract-loader'
-          },
-          {
-            loader: 'html-loader',
-            options: {
-              attrs: ['img:src']
-            }
-          }
-        ]
+          test: /\.html$/,
+          exclude: /node_modules/,
+          use: {loader: 'html-loader'}
       },
       {
         test: /\.(jpg|gif|png)$/,
