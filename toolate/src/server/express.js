@@ -8,7 +8,12 @@ const server = express();
 const bodyParser = require('body-parser');
 
 server.use(bodyParser());
-
+server.use(cookieParser());
+server.use(session({
+	secret: 'mySecretKey',
+	resave: true,
+	saveUnitialized: true
+}));
 mongoose.connect('mongodb://localhost/latecomer');
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -30,8 +35,7 @@ if (!isProd) {
 const staticMiddleware = express.static('dist');
 server.use(staticMiddleware);
 
-
-server.post('/toolatecomers', function(req, res) {
+server.post('/toolatecomers', auth, function(req, res) {
 	console.log(req.body);
 
 	if(!req.body.name || !req.body.date || !req.body.time) {
@@ -49,9 +53,8 @@ server.post('/toolatecomers', function(req, res) {
 	});
 });
 
-
 // load student info via id 
-server.get('/toolatecomers', function(req, res) {
+server.get('/toolatecomers', auth, function(req, res) {
 	// read statement
 	TooLateComers.find({}, function(err, latys) {
 		
@@ -64,7 +67,7 @@ server.get('/toolatecomers', function(req, res) {
 });
 
 // delete a student
-server.delete('/toolatecomers/:id', function(req, res) {
+server.delete('/toolatecomers/:id', auth, function(req, res) {
 	TooLateComers.findById(req.params.id, function(err, laty) {
 		if(!laty)
 			return res.send({err: 'laty not found'});
@@ -80,6 +83,30 @@ server.delete('/toolatecomers/:id', function(req, res) {
 	});
 });
 
+server.post('/login', function(req, res) {
+	if(!req.body.username || !req.body.password) {
+			res.send({err: 'username and password required'});
+	}
+ 	else if(req.body.username === 'jan' && req.body.password === 'foobar') {
+ 		req.session.user = 'jan';
+ 		req.session.admin = true;
+ 		res.send({err: 0});
+ 	}
+});
+
+server.post('/logout', function(req, res) {
+   req.session.destroy();
+   res.send({err: 0});
+});
+
+function auth(req, res, next) {
+	if(req.session && req.session.user === 'jan' && req.session.admin) {
+			return next();
+	}
+	else {
+			return res.sendStatus(401);
+	}
+}
 
 const port = process.env.PORT || 3000;
 server.listen(port, () => {

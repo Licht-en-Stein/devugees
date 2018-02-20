@@ -3,7 +3,6 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 
 const app = express();
-
 app.use(cookieParser());
 app.use(session({
 		secret: 'mySecretKey',
@@ -24,18 +23,18 @@ app.get('/login', function(req, res) {
 	if(!req.query.username || !req.query.password) {
 			res.send('username and password required');
 	}
- else if(req.query.username === 'jan' && req.query.password === 'foobar') {
+ 	else if(req.query.username === 'jan' && req.query.password === 'foobar') {
  		req.session.user = 'jan';
  		req.session.admin = true;
  		res.send('login successful');
  		console.log(JSON.stringify(req.session));
- }
+ 	}
 });
 
 app.get('/logout', function(req, res) {
    req.session.destroy();
    res.send('logout successful');
-}); 
+});
 
 app.get('/content', auth, function(req, res) {
 		 res.send('This is the secret area.');	

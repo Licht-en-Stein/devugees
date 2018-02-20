@@ -25,9 +25,24 @@ function buildApp() {
 	$('body').empty();
 	$('body').append(app);
 
-	$('#link-logout').on('click', (e) => {
-		localStorage.setItem('loggedIn', 0);
-		buildLogin();
+	$('#link-logout').on('click', (e) => {		
+		$.ajax({
+			url: '/logout',
+			method: 'POST',
+			contentType: 'application/json'
+		})
+		.done(function(data) {
+			console.log('success', data);
+
+			if(data.err == 0) {
+				localStorage.setItem('loggedIn', 0);
+				buildLogin();
+			}
+		})
+		.fail(function(xhr) {
+			console.log('error', xhr);
+		});
+				
 	});
 
 	let now = new Date();
@@ -179,7 +194,29 @@ function buildLogin() {
 	$('#form-login').submit((e) => {
 		e.preventDefault();
 
-		localStorage.setItem('loggedIn', 1);
-		buildApp();
+		let user = {
+			username: $('#input-username').val(),
+			password: $('#input-password').val()
+		};
+		console.log(user);
+
+		$.ajax({
+			url: '/login',
+			method: 'POST',
+			contentType: 'application/json',
+			dataType: 'json',
+			data: JSON.stringify(user)
+		})
+		.done(function(data) {
+			console.log('success', data);
+
+			if(data.err == 0) {
+				localStorage.setItem('loggedIn', 1);
+				buildApp();
+			}
+		})
+		.fail(function(xhr) {
+			console.log('error', xhr);
+		});
 	});
 }
