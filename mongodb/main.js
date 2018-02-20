@@ -7,7 +7,6 @@ const app = express();
 app.use(bodyParser());
 
 mongoose.connect('mongodb://localhost/test');
-
 app.get('/', function(req, res) {
 	res.json({
 		info: 'student crud api'
