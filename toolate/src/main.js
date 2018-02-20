@@ -1,12 +1,11 @@
 //import 'webpack-hot-middleware/client';
 //import './index.html';
-import sum from './sum';
 import $ from 'jquery';
 import 'bootstrap';
 import './main.scss';
 import pic from './images/beach.jpg';
 import tpl from './template.html';
-import index from './index.html';
+import app from './app.html';
 import login from './login.html';
 
 $(() => {
@@ -23,10 +22,22 @@ $(() => {
 
 function buildApp() {
 	$('body').empty();
-	$('body').append(index);
+	$('body').append(app);
+
+	$('#link-logout').on('click', (e) => {
+		localStorage.setItem('loggedIn', 0);
+		buildLogin();
+	});
 }
 
 function buildLogin() {
 	$('body').empty();
 	$('body').append(login);
+
+	$('#form-login').submit((e) => {
+		e.preventDefault();
+
+		localStorage.setItem('loggedIn', 1);
+		buildApp();
+	});
 }
